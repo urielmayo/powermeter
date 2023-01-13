@@ -1,13 +1,7 @@
-from django.urls import path
 from api import views
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    path('electricmeters/', view=views.ElectricMeterListView.as_view()),
-    path('electricmeters/<uuid:pk>', view=views.ElectricMeterDetailView.as_view()),
-    path('electricmeters/<uuid:uuid>/min/', view=views.ElectricMeterDetailMinView.as_view()),
-    path('electricmeters/<uuid:uuid>/max/', view=views.ElectricMeterDetailMaxView.as_view()),
-    path('electricmeters/<uuid:uuid>/total/', view=views.ElectricMeterDetailTotalView.as_view()),
-    path('electricmeters/<uuid:uuid>/avg/', view=views.ElectricMeterDetailAvgView.as_view()),
-
-    path('electricmeasures/', view=views.ElectricMeasureListView.as_view())
-]
+router = DefaultRouter()
+router.register(r'electricmeters', views.ElectricMeterViewSet, basename='electricmeters')
+router.register(r'electricmeasures', views.ElectricMeasureViewSet, basename='electricmeasures')
+urlpatterns = router.urls
